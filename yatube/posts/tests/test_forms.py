@@ -1,7 +1,7 @@
 from http import HTTPStatus
 from django.test import Client, TestCase
 from django.urls import reverse
-from posts.models import Group, Post, User, Comment
+from posts.models import Group, Post, User
 
 
 class PostFormCreateTests(TestCase):
