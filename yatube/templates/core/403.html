@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Ошибка 403{% endblock %}
+{% block content %}
+<div class="text-wrapper">
+    <div class="title" data-content="404">
+        403 - доступ закрыт
+    </div>
+    <div class="subtitle">
+        Упс, у вас нет прав для доступа на эту страницу.
+    </div>
+    <p class="lead"><a href="{% url 'posts:index' %}">Вернуться на главную</a></p>
+</div>
