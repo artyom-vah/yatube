@@ -22,31 +22,23 @@ class PostModelTests(TestCase):
         self.authorized_client = Client()
         self.authorized_client.force_login(self.user)
 
-    def test_urls_guest_client_list(self):
-        """Проверка всех url для неавторизованного пользователя."""
-        guest_urls_list = [
+    def test_urls_all_client_list(self):
+        """Проверка url для всех пользователей."""
+        urls = [
             '/',
-            '/group/test-slug/',
-            '/profile/Artyom/',
-            '/posts/100/',
+            f'/group/{self.group.slug}/',
+            f'/profile/{self.user}/',
+            f'/posts/{self.post.id}/',
         ]
-        for guest_url in guest_urls_list:
-            with self.subTest(address=guest_url):
-                response = self.guest_client.get(guest_url)
+        for url in urls:
+            with self.subTest(address=url):
+                response = self.guest_client.get(url)
                 self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_urls_authorized_client_list(self):
         """Проверка всех url для авторизованного пользователя."""
-        guest_urls_lisе = [
-            '/group/test-slug/',
-            '/profile/Artyom/',
-            '/posts/100/',
-            '/create/',
-        ]
-        for guest_url in guest_urls_lisе:
-            with self.subTest(address=guest_url):
-                response = self.authorized_client.get(guest_url)
-                self.assertEqual(response.status_code, HTTPStatus.OK)
+        response = self.authorized_client.get('/create/')
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_authorized_post_edit_url(self):
         """Проверка url post_edit redirect для неавторизованного

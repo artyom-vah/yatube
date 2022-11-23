@@ -7,12 +7,11 @@ from posts.utils import paginator_page
 
 
 User = get_user_model()
-FIRST_30 = 30
 CACHE_TIMEOUT_20 = 20
 
 
 def index(request):
-    posts = Post.objects.all().select_related('author', 'group')
+    posts = Post.objects.select_related('author', 'group')
     page_obj = paginator_page(request, posts)
     context = {
         'page_obj': page_obj,
@@ -34,18 +33,16 @@ def group_posts(request, slug):
 
 def profile(request, username):
     author = get_object_or_404(User, username=username)
-    post_list = author.posts.select_related('group', 'author')
-    page_obj = paginator_page(request, post_list)
+    posts = author.posts.all()
+    page_obj = paginator_page(request, posts)
     profile = author
-    if request.user.is_authenticated:
-        following = Follow.objects.filter(
-            user=request.user, author=author
-        ).exists()
-    else:
-        following = False
+    following = request.user.is_authenticated and Follow.objects.filter(
+        user=request.user,
+        author=author
+    ).exists()
     context = {
         'author': author,
-        'post_list': post_list,
+        'posts': posts,
         'page_obj': page_obj,
         'following': following,
         'profile': profile,
@@ -55,14 +52,12 @@ def profile(request, username):
 
 def post_detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    post_detail = post.text[:FIRST_30]
     form_comment = CommentForm()
     comments = post.comments.all()
     context = {
         'post': post,
-        'post_detail': post_detail,
-        'comments': comments,
         'form_comment': form_comment,
+        'comments': comments,
     }
     return render(request, 'posts/post_detail.html', context)
 
