@@ -238,10 +238,11 @@ class ShowPicturesTest(TestCase):
         reverse_context = {
             reverse('posts:index'): Post.objects.all(),
             reverse('posts:group_list', kwargs={'slug': self.group.slug}):
-                Group.objects.get(slug='group').posts.all(),
+                Group.objects.get(slug='group').related_posts_in_group.all(),
             reverse('posts:profile', kwargs={'username':
                     self.author.username}):
-                        User.objects.get(username='Artyom').posts.all()
+                        User.objects.get(username='Artyom').
+                        related_author_of_posts.all()
         }
         for adress, passed_posts in reverse_context.items():
             with self.subTest(adress=adress):

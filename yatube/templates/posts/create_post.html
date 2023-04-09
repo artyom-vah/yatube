@@ -11,49 +11,49 @@
             {% if is_edit %} Редактировать пост {% else %} Новый пост {% endif %}
           </div>
           <div class="card-body">
-              <form method="post" enctype="multipart/form-data" action=
-                {% if post %}
-                  "{% url 'posts:post_edit' post_id=post.pk %}"
-                {% else %}
-                  "{% url 'posts:post_create' %}"
-                {% endif %}>            
-                {% csrf_token %}
-                  {% for field in form %}
-                    <div class="form-group row my-3 p-3">
-                      <label for="{{ field.id_for_label }}">
-                        {{ field.label }}
+            <form method="post" enctype="multipart/form-data" action=
+              {% if post %}
+                "{% url 'posts:post_edit' post_id=post.pk %}"
+              {% else %}
+                "{% url 'posts:post_create' %}"
+              {% endif %}>            
+              {% csrf_token %}
+                {% for field in form %}
+                  <div class="form-group row my-3 p-3">
+                    <label for="{{ field.id_for_label }}">
+                      {{ field.label }}
                         {% if field.field.required %}
                           <span class="required text-danger" >*</span>
                         {% endif %}
-                      </label>
-                      {{ field }}
+                    </label>
+                    {{ field }}
                       {% if field.text %}
                         <small id="{{ field.id_for_label }}-help" class="form-text text-muted">
                           {{ field.text|safe }}
                         </small>
                       {% endif %}
-                    </div>
-                  {% endfor %}
-                <div class="form-group row my-3 p-3">
-                    <label for="{{ field.id_for_label }}">
-                      {{ field.label }}
-                    </label>
-                    {% for group in group %}
-                      <option value="1">
-                      {{ group }}
-                      </option>
-                    {% endfor %}
-                </div>                     
-                <div class="d-flex justify-content-end">
-                  <button type="submit" class="btn btn-primary">
-                      {% if is_edit %}
-                        Добавить 
-                      {% else %}
-                        Сохранить
-                      {% endif %}
-                  </button>
-                </div>
-              </form>
+                  </div>
+                {% endfor %}
+              <div class="form-group row my-3 p-3">
+                <label for="{{ field.id_for_label }}">
+                  {{ field.label }}
+                </label>
+                {% for group in group %}
+                    <option value="1">
+                  {{ group }}
+                    </option>
+                {% endfor %}
+              </div>                     
+              <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">
+                  {% if is_edit %}
+                    Добавить 
+                  {% else %}
+                    Сохранить
+                  {% endif %}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

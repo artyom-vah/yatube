@@ -18,6 +18,8 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '[::1]',
     'testserver',
+    #'www.artprog.pythonanywhere.com',
+    #'artprog.pythonanywhere.com',
 ]
 
 
@@ -34,6 +36,9 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'core.apps.CoreConfig',
     'sorl.thumbnail',
+
+    # 'debug_toolbar',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -44,9 +49,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'yatube.urls'
+
+# Добавьте IP адреса, при обращении с которых будет доступен DjDT
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
 
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 TEMPLATES = [
